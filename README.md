@@ -201,3 +201,4 @@ npm run dev
 As explicitly permitted and requested in the challenge instructions:
 * **AI Tools Used:** Google Antigravity (featuring Gemini 2.5 Flash / Pro) was utilized as an AI coding pair programmer to assist with rapid project scaffolding, mathematical verification of Elexon BMRS market formulas, and generating the comprehensive presentation walkthrough scripts.
 * **Architecture & Integrity:** All domain logic, gate closure filtering algorithms, API routes, and React components have been thoroughly designed, tested, and verified for full compliance with UK wholesale power market standards.
+

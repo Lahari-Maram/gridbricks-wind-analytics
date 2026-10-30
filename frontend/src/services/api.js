@@ -40,3 +40,4 @@ export async function fetchForecastEvolution(date, settlementPeriod = 36, gateCl
   if (!res.ok) throw new Error('Failed to load forecast evolution');
   return res.json();
 }
+

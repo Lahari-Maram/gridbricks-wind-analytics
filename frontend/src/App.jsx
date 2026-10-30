@@ -18,6 +18,25 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('daily');
   const [selectedPeriodForEvolution, setSelectedPeriodForEvolution] = useState(null);
 
+  // Theme Management (Defaults to Dark Mode, persists in localStorage)
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved === 'dark';
+    return true; // Default to sleek obsidian dark mode
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => setIsDarkMode((prev) => !prev);
+
   const [dayAheadData, setDayAheadData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -59,7 +78,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans transition-colors duration-200">
       <Header
         selectedDate={selectedDate}
         onDateChange={setSelectedDate}
@@ -72,13 +91,15 @@ export default function App() {
         onTabChange={setActiveTab}
         decisionDate={dayAheadData?.decision_date}
         gateCutoffIso={dayAheadData?.gate_closure_cutoff}
+        isDarkMode={isDarkMode}
+        onToggleTheme={toggleTheme}
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {error && (
-          <div className="mb-6 p-4 rounded-xl bg-rose-950/60 border border-rose-800 text-rose-200 flex items-center justify-between">
+          <div className="mb-6 p-4 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-200 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />
+              <AlertCircle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
               <div className="text-xs">
                 <strong className="font-semibold">Error Loading Market Data: </strong>
                 {error}
@@ -91,7 +112,7 @@ export default function App() {
                   .then(setDayAheadData)
                   .finally(() => setLoading(false));
               }}
-              className="px-3 py-1 bg-rose-900 hover:bg-rose-800 text-xs font-medium rounded-lg border border-rose-700 transition"
+              className="px-3 py-1 bg-rose-100 hover:bg-rose-200 dark:bg-rose-900 dark:hover:bg-rose-800 text-xs font-semibold rounded-lg border border-rose-300 dark:border-rose-700 transition"
             >
               Retry
             </button>
@@ -101,12 +122,12 @@ export default function App() {
         {activeTab === 'daily' && (
           <div className="space-y-6">
             {loading ? (
-              <div className="py-24 flex flex-col items-center justify-center text-slate-400">
-                <RefreshCw className="w-8 h-8 animate-spin text-sky-400 mb-3" />
-                <span className="text-sm font-medium">
+              <div className="py-24 flex flex-col items-center justify-center text-zinc-500">
+                <RefreshCw className="w-8 h-8 animate-spin text-zinc-600 dark:text-zinc-400 mb-3" />
+                <span className="text-sm font-semibold">
                   Loading Elexon Day-Ahead Forecasts & Metered Actuals for {selectedDate}...
                 </span>
-                <span className="text-xs text-slate-500 mt-1 font-mono">
+                <span className="text-xs text-zinc-500 mt-1 font-mono">
                   Filtering WINDFOR publishTime &le; {gateClosureHour}:00 UTC on D-1
                 </span>
               </div>
@@ -129,6 +150,7 @@ export default function App() {
                   periods={dayAheadData.periods}
                   deliveryDate={selectedDate}
                   onSelectPeriod={(sp) => setSelectedPeriodForEvolution(sp)}
+                  isDarkMode={isDarkMode}
                 />
 
                 {/* 4. 48 Settlement Periods Heatmap */}
@@ -152,6 +174,7 @@ export default function App() {
           <MonthlyAnalyticsTab
             gateClosureHour={gateClosureHour}
             onSelectDay={handleSelectDayFromMonthly}
+            isDarkMode={isDarkMode}
           />
         )}
       </main>
@@ -165,20 +188,20 @@ export default function App() {
         gateClosureHour={gateClosureHour}
       />
 
-      {/* Production Footer */}
-      <footer className="bg-slate-900 border-t border-slate-800/80 py-6 text-xs text-slate-400 mt-12">
+      {/* Production Institutional Footer */}
+      <footer className="bg-white dark:bg-[#0c0c0e] border-t border-slate-200 dark:border-zinc-800/80 py-5 text-xs text-zinc-500 dark:text-zinc-400 mt-12 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-slate-300">GridWholesale Trading Platform</span>
+            <span className="font-semibold text-zinc-800 dark:text-zinc-200">GridWholesale Trading Platform</span>
             <span>&bull;</span>
             <span>January 2026 UK Wholesale Power Procurement</span>
           </div>
-          <div className="flex flex-wrap items-center gap-4 text-slate-400">
+          <div className="flex flex-wrap items-center gap-4">
             <a
               href="https://bmrs.elexon.co.uk/api-documentation/endpoint/datasets/FUELHH/stream"
               target="_blank"
               rel="noreferrer"
-              className="hover:text-sky-400 flex items-center gap-1 transition"
+              className="hover:text-zinc-900 dark:hover:text-white flex items-center gap-1 transition"
             >
               Elexon FUELHH (WIND) <ExternalLink className="w-3 h-3" />
             </a>
@@ -186,12 +209,12 @@ export default function App() {
               href="https://bmrs.elexon.co.uk/api-documentation/endpoint/datasets/WINDFOR/stream"
               target="_blank"
               rel="noreferrer"
-              className="hover:text-sky-400 flex items-center gap-1 transition"
+              className="hover:text-zinc-900 dark:hover:text-white flex items-center gap-1 transition"
             >
               Elexon WINDFOR (Forecasts) <ExternalLink className="w-3 h-3" />
             </a>
-            <span className="text-slate-600">|</span>
-            <span className="text-slate-400">Day-Ahead Auction Gate: 11:00 UTC D-1</span>
+            <span className="text-zinc-400 dark:text-zinc-600">|</span>
+            <span>Auction Gate: 11:00 UTC D-1</span>
           </div>
         </div>
       </footer>

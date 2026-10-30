@@ -95,3 +95,4 @@ class ForecastEvolutionResponse(BaseModel):
     gate_closure_time: str
     latest_gate_forecast_mw: float
     evolution: List[ForecastEvolutionPoint]
+

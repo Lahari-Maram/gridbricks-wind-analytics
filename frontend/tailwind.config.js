@@ -4,26 +4,23 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        navy: {
-          900: '#0b1329',
-          800: '#111e3f',
-          700: '#1b2d5d',
+        dark: {
+          bg: '#09090b',       // Deep obsidian black
+          surface: '#121215',  // Dark card surface
+          card: '#18181b',     // Card inner
+          border: '#27272a',   // Subtle zinc border
+          hover: '#222226',
         },
-        wind: {
-          DEFAULT: '#0284c7', // Sky blue
-          glow: '#38bdf8',
-        },
-        actual: {
-          DEFAULT: '#10b981', // Emerald green
-        },
-        deficit: {
-          DEFAULT: '#ef4444', // Red (Overforecast / deficit)
-        },
-        surplus: {
-          DEFAULT: '#f59e0b', // Amber (Underforecast / surplus)
+        light: {
+          bg: '#f8fafc',
+          surface: '#ffffff',
+          card: '#f1f5f9',
+          border: '#e2e8f0',
+          hover: '#f8fafc',
         }
       }
     },
