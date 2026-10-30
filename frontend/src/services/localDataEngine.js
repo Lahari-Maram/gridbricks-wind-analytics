@@ -197,3 +197,4 @@ export function getLocalFallbackMonthly() {
     daily_summaries: dailySummaries
   };
 }
+
