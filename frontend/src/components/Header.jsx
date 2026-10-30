@@ -94,11 +94,16 @@ export default function Header({
                 onChange={(e) => onDateChange(e.target.value)}
                 className="bg-transparent text-zinc-900 dark:text-zinc-100 font-semibold focus:outline-none cursor-pointer"
               >
-                {availableDates.map((d) => (
-                  <option key={d} value={d} className="bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
-                    {d}
-                  </option>
-                ))}
+                {availableDates.map((d) => {
+                  const dObj = new Date(d);
+                  dObj.setDate(dObj.getDate() - 1);
+                  const dMinus1 = dObj.toISOString().slice(0, 10);
+                  return (
+                    <option key={d} value={d} className="bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
+                      {d} (Decision D-1: {dMinus1})
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
