@@ -29,7 +29,8 @@ This software product integrates Elexon's official datasets (`FUELHH` and `WINDF
 
 ## 2. Live Deployment Links
 
-* **Live Frontend Web App (Vercel):** [https://gridwholesale-desk.vercel.app](https://gridwholesale-desk.vercel.app) *(or your deployed Vercel/Heroku URL)*
+* **GitHub Repository:** [https://github.com/Lahari-Maram/gridbricks-wind-analytics](https://github.com/Lahari-Maram/gridbricks-wind-analytics)
+* **Live Frontend Web App (Vercel):** [https://gridbricks-wind-analytics.vercel.app](https://gridbricks-wind-analytics.vercel.app) *(or your deployed Vercel URL)*
 * **Backend API & Swagger Documentation:** [https://gridwholesale-backend.onrender.com/docs](https://gridwholesale-backend.onrender.com/docs)
 * **Unlisted Video Demo (10 min max):** [https://youtu.be/DEMO_LINK](https://youtu.be/DEMO_LINK) *(See [docs/VIDEO_PRESENTATION_SCRIPT.md](docs/VIDEO_PRESENTATION_SCRIPT.md) for script)*
 
